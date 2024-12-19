@@ -1,0 +1,14 @@
+resilience4j:
+  retry:
+    instances:
+      backendA:
+        maxAttempts: 3
+        waitDuration: 5s
+        enableExponentialBackoff: false
+  ratelimiter:
+    instances:
+      backendA:
+        limit-for-period: 5
+        limit-refresh-period: 10s
+        timeout-duration: 0
+      

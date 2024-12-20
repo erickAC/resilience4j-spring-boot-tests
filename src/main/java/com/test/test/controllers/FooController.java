@@ -1,5 +1,6 @@
 package com.test.test.controllers;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 
@@ -24,6 +25,13 @@ public class FooController {
         // String response = RestClient.create("http://localhost:8080/teste").get().retrieve().body(String.class);
         // return response;
         return "Hello World";
+    }
+
+    @RateLimiter(name = "backendA", fallbackMethod = "fallback")    
+    @CircuitBreaker(name = "circuit", fallbackMethod = "fallback")
+    @GetMapping("/circuit")
+    public String circuit() {
+        return "Hello Circuit";
     }
 
     public String fallback(Exception e) {
